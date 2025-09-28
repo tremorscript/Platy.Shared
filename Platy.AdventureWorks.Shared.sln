@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platy.Shared", "src\Platy.Shared\Platy.Shared.csproj", "{639B7B55-78DF-4863-83DB-BDE418F5A4DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{747A2635-81A2-432C-9957-A7E3034B5CCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{F808FC30-88D3-41F0-9812-BCBD1B3B5A9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platy.SharedKernel.UnitTests", "tests\Platy.SharedKernel.UnitTests\Platy.SharedKernel.UnitTests.csproj", "{9CB99828-B03E-447E-A31B-2949B0357D0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{639B7B55-78DF-4863-83DB-BDE418F5A4DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{639B7B55-78DF-4863-83DB-BDE418F5A4DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{639B7B55-78DF-4863-83DB-BDE418F5A4DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{639B7B55-78DF-4863-83DB-BDE418F5A4DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CB99828-B03E-447E-A31B-2949B0357D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CB99828-B03E-447E-A31B-2949B0357D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CB99828-B03E-447E-A31B-2949B0357D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CB99828-B03E-447E-A31B-2949B0357D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{639B7B55-78DF-4863-83DB-BDE418F5A4DC} = {747A2635-81A2-432C-9957-A7E3034B5CCF}
+		{9CB99828-B03E-447E-A31B-2949B0357D0B} = {F808FC30-88D3-41F0-9812-BCBD1B3B5A9F}
+	EndGlobalSection
+EndGlobal
