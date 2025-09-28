@@ -11,7 +11,8 @@
     <Summary>A set of base classes shared across Platy.AdventureWorks projects.</Summary>
     <PackageProjectUrl>https://github.com/tremorscript/Platy.Shared</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <IncludeContentInPack>true</IncludeContentInPack>
     <RepositoryUrl>https://github.com/tremorscript/Platy.Shared</RepositoryUrl>
     <PackageTags>DDD;Domain-Driven Design;Repository;ValueObject;Value Object;Clean Architecture;Clean Architecture Template</PackageTags>
     <Version>0.0.4</Version>
@@ -34,5 +35,8 @@
     <NoWarn>1701;1702;1591;1573;1712</NoWarn>
   </PropertyGroup>
 
-
+  <ItemGroup>
+    <None Include="$(SolutionDir)LICENSE" Pack="true" PackagePath="" />
+    <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
 </Project>
