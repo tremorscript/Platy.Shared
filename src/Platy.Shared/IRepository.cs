@@ -1,11 +1,9 @@
-﻿using Ardalis.Specification;
-
-namespace Platy.Shared;
+﻿namespace Platy.Shared;
 
 /// <summary>
-/// An abstraction for persistence
+/// An abstraction for persistence, based on Ardalis.Specification
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IRepository<T> : IRepositoryBase<T> where T : class, IAggregateRoot
+public interface IRepository<T> 
 {
 }
