@@ -5,8 +5,8 @@ namespace Platy.Shared;
 
 public class MediatRDomainEventDispatcher : IDomainEventDispatcher
 {
-  private readonly IMediator _mediator;
   private readonly ILogger<MediatRDomainEventDispatcher> _logger;
+  private readonly IMediator _mediator;
 
   public MediatRDomainEventDispatcher(IMediator mediator, ILogger<MediatRDomainEventDispatcher> logger)
   {
@@ -16,15 +16,17 @@ public class MediatRDomainEventDispatcher : IDomainEventDispatcher
 
   public async Task DispatchAndClearEvents(IEnumerable<IHasDomainEvents> entitiesWithEvents)
   {
-    foreach (IHasDomainEvents entity in entitiesWithEvents)
+    foreach (var entity in entitiesWithEvents)
     {
       if (entity is HasDomainEventsBase hasDomainEvents)
       {
-        DomainEventBase[] events = hasDomainEvents.DomainEvents.ToArray();
+        var events = hasDomainEvents.DomainEvents.ToArray();
         hasDomainEvents.ClearDomainEvents();
 
-        foreach (DomainEventBase domainEvent in events)
+        foreach (var domainEvent in events)
+        {
           await _mediator.Publish(domainEvent).ConfigureAwait(false);
+        }
       }
       else
       {

@@ -6,8 +6,6 @@ namespace Platy.SharedKernel.UnitTests.DomainEventBaseTests;
 
 public class DomainEventBase_Constructor
 {
-  private class TestDomainEvent : DomainEventBase { }
-
   [Fact]
   public void SetsDateOccurredToCurrentDateTime()
   {
@@ -20,5 +18,9 @@ public class DomainEventBase_Constructor
     // Assert
     domainEvent.DateOccurred.Should().BeOnOrAfter(beforeCreation);
     domainEvent.DateOccurred.Should().BeOnOrBefore(DateTime.UtcNow);
+  }
+
+  private class TestDomainEvent : DomainEventBase
+  {
   }
 }

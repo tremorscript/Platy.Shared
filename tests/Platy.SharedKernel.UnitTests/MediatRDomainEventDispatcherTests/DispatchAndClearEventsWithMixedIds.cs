@@ -9,8 +9,40 @@ namespace Platy.SharedKernel.UnitTests.MediatRDomainEventDispatcherTests;
 
 public class DispatchAndClearEventsWithMixedIds
 {
-  private class TestDomainEvent : DomainEventBase { }
-  public readonly record struct StronglyTyped { }
+  [Fact]
+  public async Task CallsPublishAndClearDomainEventsWithStronglyTypedId()
+  {
+    // Arrange
+    var mediatorMock = new Mock<IMediator>();
+    var domainEventDispatcher =
+      new MediatRDomainEventDispatcher(mediatorMock.Object, NullLogger<MediatRDomainEventDispatcher>.Instance);
+    var entity = new TestEntity();
+    var entityGuid = new TestEntityGuid();
+    var entityStronglyTyped = new TestEntityStronglyTyped();
+    entity.AddTestDomainEvent();
+    entityGuid.AddTestDomainEvent();
+    entityStronglyTyped.AddTestDomainEvent();
+
+    // Act
+    await domainEventDispatcher.DispatchAndClearEvents(new List<IHasDomainEvents>
+    {
+      entity, entityGuid, entityStronglyTyped
+    });
+
+    // Assert
+    mediatorMock.Verify(m => m.Publish(It.IsAny<DomainEventBase>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
+    entity.DomainEvents.Should().BeEmpty();
+    entityGuid.DomainEvents.Should().BeEmpty();
+    entityStronglyTyped.DomainEvents.Should().BeEmpty();
+  }
+
+  private class TestDomainEvent : DomainEventBase
+  {
+  }
+
+  public readonly record struct StronglyTyped
+  {
+  }
 
   private class TestEntity : EntityBase
   {
@@ -20,6 +52,7 @@ public class DispatchAndClearEventsWithMixedIds
       RegisterDomainEvent(domainEvent);
     }
   }
+
   private class TestEntityGuid : EntityBase<Guid>
   {
     public void AddTestDomainEvent()
@@ -28,6 +61,7 @@ public class DispatchAndClearEventsWithMixedIds
       RegisterDomainEvent(domainEvent);
     }
   }
+
   private class TestEntityStronglyTyped : EntityBase<StronglyTyped>
   {
     public void AddTestDomainEvent()
@@ -35,28 +69,5 @@ public class DispatchAndClearEventsWithMixedIds
       TestDomainEvent domainEvent = new();
       RegisterDomainEvent(domainEvent);
     }
-  }
-
-  [Fact]
-  public async Task CallsPublishAndClearDomainEventsWithStronglyTypedId()
-  {
-    // Arrange
-    var mediatorMock = new Mock<IMediator>();
-    var domainEventDispatcher = new MediatRDomainEventDispatcher(mediatorMock.Object, NullLogger<MediatRDomainEventDispatcher>.Instance);
-    var entity = new TestEntity();
-    var entityGuid = new TestEntityGuid();
-    var entityStronglyTyped = new TestEntityStronglyTyped();
-    entity.AddTestDomainEvent();
-    entityGuid.AddTestDomainEvent();
-    entityStronglyTyped.AddTestDomainEvent();
-
-    // Act
-    await domainEventDispatcher.DispatchAndClearEvents(new List<IHasDomainEvents> { entity, entityGuid, entityStronglyTyped });
-
-    // Assert
-    mediatorMock.Verify(m => m.Publish(It.IsAny<DomainEventBase>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
-    entity.DomainEvents.Should().BeEmpty();
-    entityGuid.DomainEvents.Should().BeEmpty();
-    entityStronglyTyped.DomainEvents.Should().BeEmpty();
   }
 }

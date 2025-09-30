@@ -6,10 +6,10 @@ name: Build and Test
 on:
   push:
     branches: [ "main" ]
-    paths: ["src/**"]
+    paths: [ "src/**" ]
   pull_request:
     branches: [ "main" ]
-    paths: ["src/**"]
+    paths: [ "src/**" ]
 
 jobs:
   build:
@@ -17,14 +17,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 9.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build Platy.Shared.sln --configuration Release
-    - name: Test
-      run: dotnet test Platy.Shared.sln --configuration Release --no-build --no-restore
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build Platy.Shared.sln --configuration Release
+      - name: Test
+        run: dotnet test Platy.Shared.sln --configuration Release --no-build --no-restore

@@ -2,6 +2,7 @@
 using Xunit;
 
 namespace Platy.SharedKernel.UnitTests.ValueObjectTests;
+
 public class ValueObject_HashEquality
 {
   [Fact]

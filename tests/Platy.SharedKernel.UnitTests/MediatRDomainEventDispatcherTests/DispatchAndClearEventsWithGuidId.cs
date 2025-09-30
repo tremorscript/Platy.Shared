@@ -9,22 +9,13 @@ namespace Platy.SharedKernel.UnitTests.MediatRDomainEventDispatcherTests;
 
 public class DispatchAndClearEventsWithGuidId
 {
-  private class TestDomainEvent : DomainEventBase { }
-  private class TestEntity : EntityBase<Guid>
-  {
-    public void AddTestDomainEvent()
-    {
-      var domainEvent = new TestDomainEvent();
-      RegisterDomainEvent(domainEvent);
-    }
-  }
-
   [Fact]
   public async Task CallsPublishAndClearDomainEvents()
   {
     // Arrange
     var mediatorMock = new Mock<IMediator>();
-    var domainEventDispatcher = new MediatRDomainEventDispatcher(mediatorMock.Object, NullLogger<MediatRDomainEventDispatcher>.Instance);
+    var domainEventDispatcher =
+      new MediatRDomainEventDispatcher(mediatorMock.Object, NullLogger<MediatRDomainEventDispatcher>.Instance);
     var entity = new TestEntity();
     entity.AddTestDomainEvent();
 
@@ -34,5 +25,18 @@ public class DispatchAndClearEventsWithGuidId
     // Assert
     mediatorMock.Verify(m => m.Publish(It.IsAny<DomainEventBase>(), It.IsAny<CancellationToken>()), Times.Once);
     entity.DomainEvents.Should().BeEmpty();
+  }
+
+  private class TestDomainEvent : DomainEventBase
+  {
+  }
+
+  private class TestEntity : EntityBase<Guid>
+  {
+    public void AddTestDomainEvent()
+    {
+      var domainEvent = new TestDomainEvent();
+      RegisterDomainEvent(domainEvent);
+    }
   }
 }

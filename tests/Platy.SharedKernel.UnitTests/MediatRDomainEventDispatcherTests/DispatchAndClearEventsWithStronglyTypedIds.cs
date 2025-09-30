@@ -9,24 +9,11 @@ namespace Platy.SharedKernel.UnitTests.MediatRDomainEventDispatcherTests;
 
 public class DispatchAndClearEventsWithStronglyTypedIds
 {
-  private class TestDomainEvent : DomainEventBase { }
-
-  public readonly record struct StronglyTyped { }
-
-  private class TestEntityStronglyTyped : EntityBase<StronglyTyped>
-  {
-    public void AddTestDomainEvent()
-    {
-      TestDomainEvent domainEvent = new();
-      RegisterDomainEvent(domainEvent);
-    }
-  }
-
   [Fact]
   public async Task CallsPublishAndClearDomainEventsWithStronglyTypedId()
   {
     // Arrange
-    Mock<IMediator> mediatorMock = new Mock<IMediator>();
+    var mediatorMock = new Mock<IMediator>();
     MediatRDomainEventDispatcher domainEventDispatcher =
       new(mediatorMock.Object, NullLogger<MediatRDomainEventDispatcher>.Instance);
     TestEntityStronglyTyped entity = new();
@@ -38,5 +25,22 @@ public class DispatchAndClearEventsWithStronglyTypedIds
     // Assert
     mediatorMock.Verify(m => m.Publish(It.IsAny<DomainEventBase>(), It.IsAny<CancellationToken>()), Times.Once);
     entity.DomainEvents.Should().BeEmpty();
+  }
+
+  private class TestDomainEvent : DomainEventBase
+  {
+  }
+
+  public readonly record struct StronglyTyped
+  {
+  }
+
+  private class TestEntityStronglyTyped : EntityBase<StronglyTyped>
+  {
+    public void AddTestDomainEvent()
+    {
+      TestDomainEvent domainEvent = new();
+      RegisterDomainEvent(domainEvent);
+    }
   }
 }

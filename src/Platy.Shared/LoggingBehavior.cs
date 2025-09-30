@@ -7,20 +7,17 @@ using Microsoft.Extensions.Logging;
 namespace Platy.Shared;
 
 /// <summary>
-/// Adds logging for all requests in MediatR pipeline.
-/// Configure by adding the service with a scoped lifetime
-/// 
-/// Example for Autofac:
-/// builder
+///   Adds logging for all requests in MediatR pipeline.
+///   Configure by adding the service with a scoped lifetime
+///   Example for Autofac:
+///   builder
 ///   .RegisterType&lt;Mediator&gt;()
 ///   .As&lt;IMediator&gt;()
 ///   .InstancePerLifetimeScope();
-///
-/// builder
+///   builder
 ///   .RegisterGeneric(typeof(LoggingBehavior&lt;,&gt;))
-///      .As(typeof(IPipelineBehavior&lt;,&gt;))
+///   .As(typeof(IPipelineBehavior&lt;,&gt;))
 ///   .InstancePerLifetimeScope();
-///
 /// </summary>
 /// <typeparam name="TRequest"></typeparam>
 /// <typeparam name="TResponse"></typeparam>
@@ -34,7 +31,8 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     _logger = logger;
   }
 
-  public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+  public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+    CancellationToken cancellationToken)
   {
     Guard.Against.Null(request);
     if (_logger.IsEnabled(LogLevel.Information))
@@ -42,11 +40,11 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
       _logger.LogInformation("Handling {RequestName}", typeof(TRequest).Name);
 
       // Reflection! Could be a performance concern
-      Type myType = request.GetType();
+      var myType = request.GetType();
       IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
-      foreach (PropertyInfo prop in props)
+      foreach (var prop in props)
       {
-        object? propValue = prop?.GetValue(request, null);
+        var propValue = prop?.GetValue(request, null);
         _logger.LogInformation("Property {Property} : {@Value}", prop?.Name, propValue);
       }
     }
@@ -55,9 +53,9 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 
     var response = await next();
 
-    _logger.LogInformation("Handled {RequestName} with {Response} in {ms} ms", typeof(TRequest).Name, response, sw.ElapsedMilliseconds);
+    _logger.LogInformation("Handled {RequestName} with {Response} in {ms} ms", typeof(TRequest).Name, response,
+      sw.ElapsedMilliseconds);
     sw.Stop();
     return response;
   }
 }
-

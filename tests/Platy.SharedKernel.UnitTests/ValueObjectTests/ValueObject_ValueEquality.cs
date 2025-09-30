@@ -5,7 +5,6 @@ namespace Platy.SharedKernel.UnitTests.ValueObjectTests;
 
 public class ValueObject_ValueEquality
 {
-
   [Fact]
   public void WithSameValuesAreEqual()
   {
@@ -25,6 +24,6 @@ public class ValueObject_ValueEquality
     var valueObject2 = new TestValueObject(2);
 
     // Act & Assert
-    valueObject1.Should().NotBe(valueObject2); 
+    valueObject1.Should().NotBe(valueObject2);
   }
 }
