@@ -15,7 +15,7 @@
     <IncludeContentInPack>true</IncludeContentInPack>
     <RepositoryUrl>https://github.com/tremorscript/Platy.Shared</RepositoryUrl>
     <PackageTags>DDD;Domain-Driven Design;Repository;ValueObject;Value Object;Clean Architecture;Clean Architecture Template</PackageTags>
-    <Version>0.0.5</Version>
+    <Version>0.0.6</Version>
     <PackageReleaseNotes>
       * Net9
     </PackageReleaseNotes>
