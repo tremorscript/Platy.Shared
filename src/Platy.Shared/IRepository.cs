@@ -14,7 +14,7 @@ public interface IRepository<TEntity, TId, TReadModel, TCreateModel, TUpdateMode
     TId id,
     CancellationToken cancellationToken);
 
-  Task<Result<IReadOnlyList<TReadModel>>> List(
+  Task<Result<IReadOnlyList<TReadModel>>> ListAsync(
     Expression<Func<TEntity, bool>> predicate,
     CancellationToken cancellationToken);
 
@@ -22,12 +22,12 @@ public interface IRepository<TEntity, TId, TReadModel, TCreateModel, TUpdateMode
     TCreateModel createModel,
     CancellationToken cancellationToken);
 
-  Task<Result<TReadModel>> Update(
+  Task<Result<TReadModel>> UpdateAsync(
     TId id,
     TUpdateModel updateModel,
     CancellationToken cancellationToken);
 
-  Task<Result<TReadModel>> Delete(
+  Task<Result<TReadModel>> DeleteAsync(
     TId id,
     CancellationToken cancellationToken);
 }
