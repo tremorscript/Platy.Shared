@@ -1,4 +1,5 @@
-﻿using Ardalis.Result;
+﻿using System.Linq.Expressions;
+using Ardalis.Result;
 
 namespace Platy.Shared;
 
@@ -9,18 +10,24 @@ public interface IRepository<TEntity, TId, TReadModel, TCreateModel, TUpdateMode
   where TCreateModel : IEntityCreateModel
   where TUpdateModel : IEntityUpdateModel
 {
-  Task<Result<TReadModel>> GetAsync(TId id,
+  Task<Result<TReadModel>> GetAsync(
+    TId id,
     CancellationToken cancellationToken);
 
-  Task<Result<IReadOnlyList<TReadModel>>> List(CancellationToken cancellationToken);
-
-  Task<Result<TReadModel>> CreateAsync(TCreateModel createModel,
+  Task<Result<IReadOnlyList<TReadModel>>> List(
+    Expression<Func<TEntity, bool>> predicate,
     CancellationToken cancellationToken);
 
-  Task<Result<TReadModel>> Update(TId id,
+  Task<Result<TReadModel>> CreateAsync(
+    TCreateModel createModel,
+    CancellationToken cancellationToken);
+
+  Task<Result<TReadModel>> Update(
+    TId id,
     TUpdateModel updateModel,
     CancellationToken cancellationToken);
 
-  Task<Result<TReadModel>> Delete(TId id,
+  Task<Result<TReadModel>> Delete(
+    TId id,
     CancellationToken cancellationToken);
 }
