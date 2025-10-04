@@ -4,7 +4,7 @@ using Ardalis.Result;
 namespace Platy.Shared;
 
 public interface IRepository<TEntity, TId, TReadModel, TCreateModel, TUpdateModel>
-  where TEntity : EntityBase<TId>
+  where TEntity : class, IIdentity<TId>
   where TId : struct, IEquatable<TId>
   where TReadModel : IEntityReadModel
   where TCreateModel : IEntityCreateModel
